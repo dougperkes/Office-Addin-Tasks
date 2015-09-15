@@ -4,6 +4,7 @@
     "use strict";
 
 	var propertySetId = "d7abdb30-e17e-43ab-8879-f42f7b5efa03";
+	var mailMessageId;
     // The Office initialize function must be run each time a new page is loaded
     Office.initialize = function (reason) {
         $(document).ready(function () {
@@ -22,6 +23,8 @@
         var from;
         if (item.itemType === Office.MailboxEnums.ItemType.Message) {
             from = Office.cast.item.toMessageRead(item).from;
+			//"<BLU202-W753EAC796EB01F36FDA6CC6780@phx.gbl>"
+			mailMessageId = xmlEscape(item.internetMessageId);
         } else if (item.itemType === Office.MailboxEnums.ItemType.Appointment) {
             from = Office.cast.item.toAppointmentRead(item).organizer;
         }
@@ -33,6 +36,12 @@
             });
         }
     }
+
+	function xmlEscape(val) {
+		val = val.replace("<", "&amp;lt");
+		val = val.replace(">", "&amp;gt");
+		return val;
+	}
 
 	function createSampleTask() {
 		var soapEnv = '<?xml version="1.0" encoding="utf-8"?> \
@@ -49,8 +58,8 @@
 								  <t:Subject>My task</t:Subject> \
 								  <t:ExtendedProperty> \
 									<t:ExtendedFieldURI PropertySetId="' + propertySetId + '" \
-										PropertyName="TaskCategory" PropertyType="String" /> \
-									<t:Value>A</t:Value> \
+										PropertyName="RelatedMailMessage" PropertyType="String" /> \
+									<t:Value>' + mailMessageId + '</t:Value> \
 								</t:ExtendedProperty> \
 								  <t:DueDate>2006-10-26T21:32:52</t:DueDate> \
 								  <t:Status>NotStarted</t:Status> \
@@ -61,8 +70,8 @@
 						</soap:Envelope>';
 		var mailbox = Office.context.mailbox;
 		app.showNotification('Status', 'Making EWS request');
-   mailbox.makeEwsRequestAsync(soapEnv, callback);
-}
+	   mailbox.makeEwsRequestAsync(soapEnv, callback);
+	}
 
 function callback(asyncResult)  {
 	app.showNotification('Status', 'EWS Request Completed');
