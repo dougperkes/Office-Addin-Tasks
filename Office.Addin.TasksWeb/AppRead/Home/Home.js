@@ -49,6 +49,10 @@
 		return val;
 	}
 	
+	/*
+	FindItem Operation: https://msdn.microsoft.com/EN-US/library/aa566107(v=exchg.150).aspx
+	QueryString: https://msdn.microsoft.com/EN-US/library/ee693615(v=exchg.150).aspx
+	*/
 	function findRelatedTasks() {
 		var soapEnv = '<?xml version="1.0" encoding="utf-8"?> \
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" \
