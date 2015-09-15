@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Office.Addin.Tasks", "Office.Addin.Tasks.csproj", "{4864E556-5D24-499C-BE28-F3B2F94A72AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Office.Addin.TasksWeb", "..\Office.Addin.TasksWeb\Office.Addin.TasksWeb.csproj", "{F2333CDB-EC66-4266-88FD-CDDFEABA94F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4864E556-5D24-499C-BE28-F3B2F94A72AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4864E556-5D24-499C-BE28-F3B2F94A72AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4864E556-5D24-499C-BE28-F3B2F94A72AA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4864E556-5D24-499C-BE28-F3B2F94A72AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4864E556-5D24-499C-BE28-F3B2F94A72AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4864E556-5D24-499C-BE28-F3B2F94A72AA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F2333CDB-EC66-4266-88FD-CDDFEABA94F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2333CDB-EC66-4266-88FD-CDDFEABA94F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2333CDB-EC66-4266-88FD-CDDFEABA94F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2333CDB-EC66-4266-88FD-CDDFEABA94F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
