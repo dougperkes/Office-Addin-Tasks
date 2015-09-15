@@ -22,6 +22,9 @@
 <body>
     <div id="content-main">
         <div class="padding">
+            <p id="relatedTasks">
+                Tasks related to this message:
+            </p>
             <p><strong>Add home screen content here.</strong></p>
             <p>For example, this app was activated with following details:</p>
             <table id="details">
@@ -34,7 +37,11 @@
                     <td id="from"></td>
                 </tr>
             </table>
+            <h3>Task Details</h3>
+            <div>Subject: <input id="taskSubject" /></div>
+            <div>Body: <button id="insertTaskBody">Insert email body</button><br /><textarea id="taskBody"></textarea></div>
             <button id="createTask">Create Task</button>
+
         </div>
         <div id="relatedTasks">
 

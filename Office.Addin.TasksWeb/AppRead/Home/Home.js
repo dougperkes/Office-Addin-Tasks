@@ -1,4 +1,5 @@
 ﻿/// <reference path="../App.js" />
+/// <reference path="../../Scripts/jquery-1.9.1.js" />
 
 (function () {
     "use strict";
@@ -19,7 +20,12 @@
     function displayItemDetails() {
         var item = Office.cast.item.toItemRead(Office.context.mailbox.item);
         $('#subject').text(item.subject);
-
+		$("#taskSubject").val(item.subject);
+		$("#insertTaskBody").click(function() {
+			item.body.getAsync("text", function(result) {
+				$("#taskBody").val(result.value);
+			});
+		});
         var from;
         if (item.itemType === Office.MailboxEnums.ItemType.Message) {
             from = Office.cast.item.toMessageRead(item).from;
@@ -42,6 +48,36 @@
 		val = val.replace(">", "&amp;gt");
 		return val;
 	}
+	
+	function findRelatedTasks() {
+		var soapEnv = '<?xml version="1.0" encoding="utf-8"?> \
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" \
+               xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types"> \
+  <soap:Body> \
+    <FindItem xmlns="http://schemas.microsoft.com/exchange/services/2006/messages" \
+               xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types" \
+              Traversal="Shallow"> \
+		<m:ItemShape> \
+        	<t:BaseShape>IdOnly</t:BaseShape> \
+        	<t:AdditionalProperties> \
+          		<t:FieldURI FieldURI="item:Subject" /> \
+        	</t:AdditionalProperties> \
+      	</m:ItemShape> \
+      <m:IndexedPageItemView MaxEntriesReturned="1" Offset="0" BasePoint="Beginning" /> \
+      <m:QueryString>Kind:tasks</m:QueryString> \
+    </FindItem> \
+  </soap:Body> \
+</soap:Envelope>';
+
+		var mailbox = Office.context.mailbox;
+		mailbox.makeEwsRequestAsync(soapEnv, searchCallback);
+	}
+	
+	function searchCallback(asyncResult) {
+		var result = asyncResult.value;
+		var context = asyncResult.context;
+		
+	}
 
 	function createSampleTask() {
 		var soapEnv = '<?xml version="1.0" encoding="utf-8"?> \
@@ -55,7 +91,7 @@
 										MessageDisposition="SaveOnly"> \
 							  <Items> \
 								<t:Task> \
-								  <t:Subject>My task</t:Subject> \
+								  <t:Subject>' + $("#taskSubject").val() + '</t:Subject> \
 								  <t:ExtendedProperty> \
 									<t:ExtendedFieldURI PropertySetId="' + propertySetId + '" \
 										PropertyName="RelatedMailMessage" PropertyType="String" /> \
@@ -70,10 +106,10 @@
 						</soap:Envelope>';
 		var mailbox = Office.context.mailbox;
 		app.showNotification('Status', 'Making EWS request');
-	   mailbox.makeEwsRequestAsync(soapEnv, callback);
+	   mailbox.makeEwsRequestAsync(soapEnv, createTaskCallback);
 	}
 
-function callback(asyncResult)  {
+function createTaskCallback(asyncResult)  {
 	app.showNotification('Status', 'EWS Request Completed');
    var result = asyncResult.value;
    var context = asyncResult.context;
